@@ -18,7 +18,7 @@ return new class extends Migration
 
             $table->string('title');
             $table->longText('description');
-            $table->string('author');
+            $table->unsignedBigInteger('author_id');
             $table->string('publisher');
             $table->string('date_of_issue');
 

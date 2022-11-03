@@ -12,7 +12,7 @@ class BookController extends Controller
 
     public function index()
     {
-        $books = Book::all();
+        $books = Book::with('author')->get();
 
         return ResponseFormatter::success(
             $books,
@@ -26,7 +26,7 @@ class BookController extends Controller
         $book = Book::create([
             'title' => $request->title,
             'description' => $request->description,
-            'author' => $request->author,
+            'author_id' => $request->author_id,
             'publisher' => $request->publisher,
             'date_of_issue' => $request->date_of_issue,
         ]);
@@ -39,7 +39,7 @@ class BookController extends Controller
 
     public function show($id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::with('author')->findOrFail($id);
 
         return ResponseFormatter::success(
             $book,
@@ -49,12 +49,12 @@ class BookController extends Controller
 
     public function update(BookRequest $request, $id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::with('author')->findOrFail($id);
 
         $book->update([
             'title' => $request->title,
             'description' => $request->description,
-            'author' => $request->author,
+            'author_id' => $request->author_id,
             'publisher' => $request->publisher,
             'date_of_issue' => $request->date_of_issue,
         ]);
@@ -68,7 +68,7 @@ class BookController extends Controller
 
     public function destroy($id)
     {
-        $book = Book::findOrFail($id);
+        $book = Book::with('author')->findOrFail($id);
 
         $book->delete();
 
